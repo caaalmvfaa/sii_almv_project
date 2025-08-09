@@ -17,6 +17,7 @@ class AlmacenViewModel(QObject):
     entrada_registrada = Signal(object) # Emite EntradaBodegaDTO
     exito = Signal(str)
     error = Signal(str)
+    operacion_finalizada = Signal(str)  # Señal agregada para compatibilidad con la vista
 
     @inject
     def __init__(

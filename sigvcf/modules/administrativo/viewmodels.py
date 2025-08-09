@@ -18,6 +18,7 @@ class ContratoViewModel(QObject):
     contrato_actual_changed = Signal(object)
     status_message = Signal(str)
     expediente_adjuntado = Signal(str)
+    operacion_finalizada = Signal(str)  # Señal agregada para compatibilidad con la vista
 
     @inject
     def __init__(

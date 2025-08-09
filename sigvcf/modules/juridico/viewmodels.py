@@ -16,6 +16,7 @@ class JuridicoViewModel(QObject):
     penalizacion_calculada = Signal(object) # Emite un PenalizacionDTO
     exito = Signal(str)
     error = Signal(str)
+    operacion_finalizada = Signal(str)  # Señal agregada para compatibilidad con la vista
 
     @inject
     def __init__(
