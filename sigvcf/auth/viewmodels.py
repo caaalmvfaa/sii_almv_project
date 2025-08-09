@@ -31,10 +31,10 @@ class LoginViewModel(QObject):
             return
 
         try:
-            usuario_autenticado = self.auth_service.autenticar_usuario(usuario, contrasena)
-            if usuario_autenticado:
-                logger.info(f"ViewModel: Login exitoso para '{usuario}'.")
-                self.login_exitoso.emit(usuario_autenticado)
+            usuario_dict = self.auth_service.autenticar_usuario(usuario, contrasena)
+            if usuario_dict:
+                logger.info(f"ViewModel: Login exitoso para '{usuario_dict['nombre']}'.")
+                self.login_exitoso.emit(usuario_dict)
             else:
                 logger.warning(f"ViewModel: Login fallido para '{usuario}'.")
                 self.login_fallido.emit("Credenciales incorrectas. Por favor, intente de nuevo.")
