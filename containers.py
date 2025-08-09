@@ -1,4 +1,3 @@
-# containers.py
 from dependency_injector import containers, providers
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -50,6 +49,6 @@ class Container(containers.DeclarativeContainer):
     almacen_view_model = providers.Factory(AlmacenViewModel, almacen_service=almacen_service)
     nutricion_view_model = providers.Factory(NutricionViewModel, nutricion_service=nutricion_service)
     juridico_view_model = providers.Factory(JuridicoViewModel, juridico_service=juridico_service)
-    contrato_view_model = providers.Factory(ContratoViewModel, admin_service=administrativo_service)
+    contrato_view_model = providers.Factory(ContratoViewModel, administrativo_service=administrativo_service)
     financiero_view_model = providers.Factory(FinancieroViewModel, financiero_service=financiero_service)
     proveedor_view_model = providers.Factory(ProveedorViewModel, proveedor_service=proveedor_service)

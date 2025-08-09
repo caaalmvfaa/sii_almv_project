@@ -1,6 +1,7 @@
-# init_db.py
+### FILE: init_db.py
 import datetime
 import os
+import bcrypt
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -52,14 +53,34 @@ def seed_data(session):
         session.flush() # Flush para obtener los IDs de los roles
 
         # --- Crear Usuarios ---
+        # Hashear contraseñas de forma segura con bcrypt
+        password_plana = '123'.encode('utf-8')
+
+        def hash_password(password: bytes) -> str:
+            salt = bcrypt.gensalt()
+            hashed = bcrypt.hashpw(password, salt)
+            return hashed.decode('utf-8')
+
         usuario_admin = Usuario(
             nombre='Jesus',
-            password_hash='123', # En un sistema real, usar bcrypt
+            password_hash=hash_password(password_plana),
             rol_id=rol_admin.id
         )
-        usuario_nutri = Usuario(nombre='Nutri', password_hash='123', rol_id=rol_nutricion.id)
-        usuario_almacen = Usuario(nombre='Almacenista', password_hash='123', rol_id=rol_almacen.id)
-        usuario_conta = Usuario(nombre='Contador', password_hash='123', rol_id=rol_contador.id)
+        usuario_nutri = Usuario(
+            nombre='Nutri',
+            password_hash=hash_password(password_plana),
+            rol_id=rol_nutricion.id
+        )
+        usuario_almacen = Usuario(
+            nombre='Almacenista',
+            password_hash=hash_password(password_plana),
+            rol_id=rol_almacen.id
+        )
+        usuario_conta = Usuario(
+            nombre='Contador',
+            password_hash=hash_password(password_plana),
+            rol_id=rol_contador.id
+        )
 
         session.add_all([usuario_admin, usuario_nutri, usuario_almacen, usuario_conta])
 
