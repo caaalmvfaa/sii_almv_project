@@ -1,5 +1,6 @@
 # main.py
 import sys
+import qtawesome as qta
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QHBoxLayout, QListWidget,
     QStackedWidget, QSizePolicy, QDialog
@@ -62,7 +63,15 @@ class MainWindow(QMainWindow):
             "Portal de Proveedores": (self.container.proveedor_view_model, ProveedorView),
         }
 
-        # Mapeo de roles a los nombres de los módulos que pueden ver
+        icon_map = {
+            "Gestión de Contratos": "fa5s.file-signature",
+            "Planificación Nutricional": "fa5s.apple-alt",
+            "Control de Almacén": "fa5s.boxes",
+            "Gestión Jurídica": "fa5s.gavel",
+            "Recursos Financieros": "fa5s.file-invoice-dollar",
+            "Portal de Proveedores": "fa5s.truck"
+        }
+
         role_permissions = {
             'Admin': list(all_modules.keys()),
             'Nutricionista': ["Planificación Nutricional"],
@@ -76,7 +85,13 @@ class MainWindow(QMainWindow):
 
         for name, (vm_factory, view_class) in all_modules.items():
             if name in allowed_modules:
+                icon_name = icon_map.get(name, "fa5s.question-circle")
+                icon = qta.icon(icon_name, color='#f0f0f0', color_active='#66b2ff')
+                
                 self.nav_list.addItem(name)
+                list_item = self.nav_list.item(self.nav_list.count() - 1)
+                list_item.setIcon(icon)
+                
                 view_model = vm_factory()
                 view_widget = view_class(view_model)
                 self.view_stack.addWidget(view_widget)
@@ -94,9 +109,7 @@ class Application:
         
         login_view = LoginView(view_model=login_vm)
         
-        # exec() es bloqueante. El código no continuará hasta que el diálogo se cierre.
         if login_view.exec() == QDialog.DialogCode.Accepted:
-            # Si el login fue exitoso, el usuario ya está guardado en self.authenticated_user
             self.main_window = MainWindow(usuario=self.authenticated_user, container=self.container)
             self.main_window.show()
             return True
@@ -107,6 +120,14 @@ class Application:
 
 def main() -> None:
     app = QApplication(sys.argv)
+
+    try:
+        with open("styles.qss", "r") as f:
+            _style = f.read()
+            app.setStyleSheet(_style)
+    except FileNotFoundError:
+        print("Advertencia: No se encontró el archivo 'styles.qss'. Se usará el estilo por defecto.")
+
     container = Container()
     container.wire(
         modules=[
@@ -125,7 +146,6 @@ def main() -> None:
     if app_manager.run():
         sys.exit(app.exec())
     else:
-        # El usuario cerró la ventana de login sin autenticarse
         sys.exit(0)
 
 if __name__ == "__main__":

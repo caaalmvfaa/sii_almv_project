@@ -1,4 +1,5 @@
 # sigvcf/modules/financiero/views.py
+import qtawesome as qta
 from typing import List
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtWidgets import (
@@ -94,8 +95,10 @@ class FinancieroView(QWidget):
         contador_layout.addWidget(self.expedientes_table)
 
         contador_actions = QHBoxLayout()
-        self.verificar_button = QPushButton("Verificar Expediente Seleccionado")
-        self.generar_poliza_button = QPushButton("Generar Póliza para Expediente")
+        self.verificar_button = QPushButton("Verificar Expediente")
+        self.verificar_button.setIcon(qta.icon('fa5s.check-double', color='white'))
+        self.generar_poliza_button = QPushButton("Generar Póliza")
+        self.generar_poliza_button.setIcon(qta.icon('fa5s.file-alt', color='white'))
         self.contador_id_spinbox = QSpinBox()
         self.contador_id_spinbox.setRange(1, 999)
         contador_actions.addWidget(self.verificar_button)
@@ -117,6 +120,7 @@ class FinancieroView(QWidget):
         jefatura_layout.addWidget(self.polizas_table)
 
         self.aprobar_button = QPushButton("Aprobar Póliza Seleccionada")
+        self.aprobar_button.setIcon(qta.icon('fa5s.check-circle', color='white'))
         jefatura_layout.addWidget(self.aprobar_button, alignment=Qt.AlignmentFlag.AlignRight)
         main_layout.addWidget(jefatura_group)
 

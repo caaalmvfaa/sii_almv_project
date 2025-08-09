@@ -1,4 +1,5 @@
 # sigvcf/modules/juridico/views.py
+import qtawesome as qta
 from typing import List
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtWidgets import (
@@ -57,14 +58,12 @@ class JuridicoView(QWidget):
         gestion_group = QGroupBox("Gestión de Incumplimientos")
         gestion_layout = QVBoxLayout(gestion_group)
 
-        # Tabla de reportes
         self.reportes_table = QTableView()
         self.reportes_table.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
         self.reportes_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         gestion_layout.addWidget(QLabel("Reportes Pendientes:"))
         gestion_layout.addWidget(self.reportes_table)
 
-        # Formulario para nuevo reporte
         nuevo_reporte_group = QGroupBox("Registrar Nuevo Incumplimiento")
         form_layout = QFormLayout(nuevo_reporte_group)
         self.contrato_id_spinbox = QSpinBox()
@@ -76,6 +75,7 @@ class JuridicoView(QWidget):
         self.descripcion_edit = QTextEdit()
         self.descripcion_edit.setPlaceholderText("Describa detalladamente el incumplimiento...")
         self.registrar_button = QPushButton("Registrar Incumplimiento")
+        self.registrar_button.setIcon(qta.icon('fa5s.check-circle', color='white'))
         
         form_layout.addRow("ID del Contrato:", self.contrato_id_spinbox)
         form_layout.addRow("Tipo de Incumplimiento:", self.tipo_combo)
@@ -93,6 +93,7 @@ class JuridicoView(QWidget):
         self.orden_id_spinbox = QSpinBox()
         self.orden_id_spinbox.setRange(1, 999999)
         self.calcular_button = QPushButton("Calcular Penalización")
+        self.calcular_button.setIcon(qta.icon('fa5s.calculator', color='white'))
         
         self.dias_atraso_label = QLabel("---")
         self.monto_penalizacion_label = QLabel("---")
@@ -108,11 +109,9 @@ class JuridicoView(QWidget):
         main_layout.addWidget(calculadora_group)
 
     def _connect_signals(self):
-        # Vista -> ViewModel
         self.registrar_button.clicked.connect(self._on_registrar_incumplimiento)
         self.calcular_button.clicked.connect(self._on_calcular_penalizacion)
 
-        # ViewModel -> Vista
         self.vm.reportes_cargados.connect(self._update_reportes_table)
         self.vm.penalizacion_calculada.connect(self._display_penalizacion_result)
         self.vm.operacion_finalizada.connect(self._show_status_message)
@@ -141,7 +140,6 @@ class JuridicoView(QWidget):
             self.monto_penalizacion_label.setText(f"{resultado.monto_penalizacion:,.2f}")
             self.detalle_calculo_label.setText(resultado.calculo_detalle)
         else:
-            # Limpiar etiquetas si no hay resultado (o hubo error)
             self.dias_atraso_label.setText("---")
             self.monto_penalizacion_label.setText("---")
             self.detalle_calculo_label.setText("---")

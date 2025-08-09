@@ -1,4 +1,5 @@
 # sigvcf/modules/proveedores/views.py
+import qtawesome as qta
 from typing import List
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtWidgets import (
@@ -51,7 +52,6 @@ class ProveedorView(QWidget):
     def _setup_ui(self):
         main_layout = QVBoxLayout(self)
 
-        # Placeholder para simular el ID del proveedor logueado
         proveedor_id_layout = QHBoxLayout()
         proveedor_id_layout.addWidget(QLabel("<b>Simulación: ID del Proveedor Logueado:</b>"))
         self.proveedor_id_spinbox = QSpinBox()
@@ -60,17 +60,16 @@ class ProveedorView(QWidget):
         proveedor_id_layout.addStretch()
         main_layout.addLayout(proveedor_id_layout)
 
-        # --- Sección 1: Órdenes de Compra Pendientes ---
         ordenes_group = QGroupBox("Órdenes de Compra Pendientes")
         ordenes_layout = QVBoxLayout(ordenes_group)
         self.ordenes_table = QTableView()
         self.ordenes_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.actualizar_ordenes_button = QPushButton("Actualizar Lista")
+        self.actualizar_ordenes_button.setIcon(qta.icon('fa5s.sync-alt', color='white'))
         ordenes_layout.addWidget(self.ordenes_table)
         ordenes_layout.addWidget(self.actualizar_ordenes_button, alignment=Qt.AlignmentFlag.AlignRight)
         main_layout.addWidget(ordenes_group)
 
-        # --- Sección 2: Cargar Factura (XML) ---
         factura_group = QGroupBox("Cargar Factura (XML)")
         factura_layout = QFormLayout(factura_group)
         self.factura_orden_id_spinbox = QSpinBox()
@@ -78,17 +77,18 @@ class ProveedorView(QWidget):
         self.xml_content_edit = QPlainTextEdit()
         self.xml_content_edit.setPlaceholderText("Pegue aquí el contenido completo del archivo XML de la factura...")
         self.subir_factura_button = QPushButton("Subir Factura")
+        self.subir_factura_button.setIcon(qta.icon('fa5s.upload', color='white'))
         factura_layout.addRow("ID de la Orden de Compra:", self.factura_orden_id_spinbox)
         factura_layout.addRow("Contenido XML:", self.xml_content_edit)
         factura_layout.addRow(self.subir_factura_button)
         main_layout.addWidget(factura_group)
 
-        # --- Sección 3: Rastrear Entrega ---
         rastreo_group = QGroupBox("Rastrear Entrega")
         rastreo_layout = QFormLayout(rastreo_group)
         self.folio_rb_edit = QLineEdit()
         self.folio_rb_edit.setPlaceholderText("Ej: RB-20231027153000-123")
         self.rastrear_button = QPushButton("Rastrear")
+        self.rastrear_button.setIcon(qta.icon('fa5s.search-location', color='white'))
         self.estado_folio_label = QLabel("---")
         self.estado_fecha_label = QLabel("---")
         self.estado_orden_label = QLabel("---")
@@ -101,12 +101,10 @@ class ProveedorView(QWidget):
         main_layout.addWidget(rastreo_group)
 
     def _connect_signals(self):
-        # Vista -> ViewModel
         self.actualizar_ordenes_button.clicked.connect(self._on_cargar_ordenes)
         self.subir_factura_button.clicked.connect(self._on_subir_factura)
         self.rastrear_button.clicked.connect(self._on_rastrear_entrega)
 
-        # ViewModel -> Vista
         self.vm.ordenes_cargadas.connect(self._update_ordenes_table)
         self.vm.estado_entrega_obtenido.connect(self._display_estado_entrega)
         self.vm.operacion_finalizada.connect(self._show_status_message)

@@ -1,7 +1,8 @@
 # sigvcf/modules/administrativo/views.py
 import sys
+import qtawesome as qta
 from typing import List, Dict, Any
-from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex, QDate
+from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex, QDate, QSortFilterProxyModel
 from PySide6.QtWidgets import (
     QWidget, QHBoxLayout, QVBoxLayout, QTableView, QPushButton, QGroupBox,
     QFormLayout, QLineEdit, QComboBox, QDateEdit, QMessageBox, QLabel
@@ -26,11 +27,12 @@ class ContratosTableModel(QAbstractTableModel):
         return len(self._headers)
 
     def headerData(self, section, orientation, role):
-        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+        if role == Qt.ItemDataRole.DisplayRole and orientation == Qt.Orientation.Horizontal:
             return self._headers[section]
+        return None
 
     def data(self, index, role):
-        if role == Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             contrato = self._data[index.row()]
             if index.column() == 0: return contrato.id
             if index.column() == 1: return contrato.codigo_licitacion
@@ -43,6 +45,12 @@ class ContratosTableModel(QAbstractTableModel):
         if 0 <= row < len(self._data):
             return self._data[row].id
         return None
+    
+    def update_data(self, data: List[ContratoDTO]):
+        self.beginResetModel()
+        self._data = data
+        self.endResetModel()
+
 
 class ArticulosTableModel(QAbstractTableModel):
     def __init__(self, data: List[ArticuloContratoDTO] = [], parent=None):
@@ -57,11 +65,12 @@ class ArticulosTableModel(QAbstractTableModel):
         return len(self._headers)
 
     def headerData(self, section, orientation, role):
-        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+        if role == Qt.ItemDataRole.DisplayRole and orientation == Qt.Orientation.Horizontal:
             return self._headers[section]
+        return None
 
     def data(self, index, role):
-        if role == Qt.DisplayRole or role == Qt.EditRole:
+        if role == Qt.ItemDataRole.DisplayRole or role == Qt.ItemDataRole.EditRole:
             articulo = self._data[index.row()]
             if index.column() == 0: return articulo.clave_articulo
             if index.column() == 1: return articulo.descripcion
@@ -72,10 +81,10 @@ class ArticulosTableModel(QAbstractTableModel):
         return None
 
     def flags(self, index):
-        return Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable
+        return Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsEditable
 
     def setData(self, index, value, role):
-        if role == Qt.EditRole:
+        if role == Qt.ItemDataRole.EditRole:
             articulo = self._data[index.row()]
             try:
                 if index.column() == 0: articulo.clave_articulo = str(value)
@@ -112,57 +121,82 @@ class ContratosView(QWidget):
         super().__init__(parent)
         self.vm = view_model
         self.setWindowTitle("Gestión de Contratos")
+        
         self._setup_ui()
+
+        self.source_model = ContratosTableModel()
+        self.proxy_model = QSortFilterProxyModel()
+        self.proxy_model.setSourceModel(self.source_model)
+        self.proxy_model.setFilterKeyColumn(1)
+        self.proxy_model.setFilterCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        self.contracts_table.setModel(self.proxy_model)
+        
         self._connect_signals()
         self.vm.cargar_datos_iniciales()
 
     def _setup_ui(self):
-        # Layout principal
         main_layout = QHBoxLayout(self)
 
-        # Panel izquierdo: Lista de contratos
         left_panel = QVBoxLayout()
+        self.search_input = QLineEdit()
+        self.search_input.setPlaceholderText("Buscar por Cód. Licitación...")
         self.contracts_table = QTableView()
-        self.contracts_table.setSelectionBehavior(QTableView.SelectRows)
-        self.contracts_table.setSelectionMode(QTableView.SingleSelection)
+        self.contracts_table.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.contracts_table.setSelectionMode(QTableView.SelectionMode.SingleSelection)
+        self.contracts_table.setSortingEnabled(True)
         self.new_contract_button = QPushButton("Nuevo Contrato")
+        self.new_contract_button.setIcon(qta.icon('fa5s.plus-circle', color='white'))
+        
         left_panel.addWidget(QLabel("Contratos Existentes"))
+        left_panel.addWidget(self.search_input)
         left_panel.addWidget(self.contracts_table)
         left_panel.addWidget(self.new_contract_button)
         main_layout.addLayout(left_panel, 1)
 
-        # Panel derecho: Formulario de edición
         right_panel = QGroupBox("Detalle del Contrato")
         form_layout = QVBoxLayout(right_panel)
         
-        # Formulario de datos del contrato
         self.form = QFormLayout()
         self.codigo_licitacion_edit = QLineEdit()
         self.proveedor_combo = QComboBox()
         self.fecha_inicio_edit = QDateEdit(calendarPopup=True)
         self.fecha_fin_edit = QDateEdit(calendarPopup=True)
+        
+        # Widgets para gestión de expediente
+        self.expediente_path_edit = QLineEdit()
+        self.expediente_path_edit.setReadOnly(True)
+        self.adjuntar_btn = QPushButton("Adjuntar...")
+        self.adjuntar_btn.setIcon(qta.icon('fa5s.paperclip', color='white'))
+        self.ver_btn = QPushButton("Ver")
+        self.ver_btn.setIcon(qta.icon('fa5s.eye', color='white'))
+        expediente_layout = QHBoxLayout()
+        expediente_layout.addWidget(self.expediente_path_edit)
+        expediente_layout.addWidget(self.adjuntar_btn)
+        expediente_layout.addWidget(self.ver_btn)
+        
         self.form.addRow("Cód. Licitación:", self.codigo_licitacion_edit)
         self.form.addRow("Proveedor:", self.proveedor_combo)
         self.form.addRow("Fecha Inicio:", self.fecha_inicio_edit)
         self.form.addRow("Fecha Fin:", self.fecha_fin_edit)
+        self.form.addRow("Expediente:", expediente_layout)
         form_layout.addLayout(self.form)
 
-        # Tabla de artículos
         form_layout.addWidget(QLabel("Artículos del Contrato"))
         self.articles_table = QTableView()
         form_layout.addWidget(self.articles_table)
         
-        # Botones para artículos
         article_buttons_layout = QHBoxLayout()
         self.add_article_button = QPushButton("Añadir Artículo")
+        self.add_article_button.setIcon(qta.icon('fa5s.plus-circle', color='white'))
         self.remove_article_button = QPushButton("Quitar Artículo")
+        self.remove_article_button.setIcon(qta.icon('fa5s.minus-circle', color='white'))
         article_buttons_layout.addWidget(self.add_article_button)
         article_buttons_layout.addWidget(self.remove_article_button)
         form_layout.addLayout(article_buttons_layout)
 
-        # Botones de acción
         action_buttons_layout = QHBoxLayout()
         self.save_button = QPushButton("Guardar")
+        self.save_button.setIcon(qta.icon('fa5s.save', color='white'))
         action_buttons_layout.addStretch()
         action_buttons_layout.addWidget(self.save_button)
         form_layout.addLayout(action_buttons_layout)
@@ -170,27 +204,30 @@ class ContratosView(QWidget):
         main_layout.addWidget(right_panel, 2)
 
     def _connect_signals(self):
-        # Conexiones Vista -> ViewModel
+        self.search_input.textChanged.connect(self.proxy_model.setFilterRegularExpression)
         self.new_contract_button.clicked.connect(self.vm.crear_nuevo_contrato)
         self.contracts_table.selectionModel().selectionChanged.connect(self._on_contract_selected)
         self.save_button.clicked.connect(self._on_save_clicked)
         self.add_article_button.clicked.connect(self._on_add_article)
         self.remove_article_button.clicked.connect(self._on_remove_article)
+        self.adjuntar_btn.clicked.connect(self._on_adjuntar_expediente)
+        self.ver_btn.clicked.connect(self._on_ver_expediente)
 
-        # Conexiones ViewModel -> Vista
         self.vm.contratos_changed.connect(self._update_contracts_table)
         self.vm.proveedores_changed.connect(self._update_proveedores_combo)
         self.vm.contrato_actual_changed.connect(self._populate_form)
         self.vm.status_message.connect(lambda msg: QMessageBox.information(self, "Información", msg))
-
-    # --- Slots de la Vista ---
+        self.vm.expediente_adjuntado.connect(self.expediente_path_edit.setText)
 
     def _on_contract_selected(self, selected, deselected):
         indexes = selected.indexes()
         if not indexes: return
-        row = indexes[0].row()
-        model = self.contracts_table.model()
-        contrato_id = model.get_id_at_row(row)
+        
+        proxy_index = indexes[0]
+        source_index = self.proxy_model.mapToSource(proxy_index)
+        row = source_index.row()
+        
+        contrato_id = self.source_model.get_id_at_row(row)
         if contrato_id:
             self.vm.seleccionar_contrato(contrato_id)
 
@@ -206,6 +243,7 @@ class ContratosView(QWidget):
             "proveedor_id": proveedor_id,
             "fecha_inicio": self.fecha_inicio_edit.date().toPython(),
             "fecha_fin": self.fecha_fin_edit.date().toPython(),
+            "expediente_path": self.expediente_path_edit.text(),
             "articulos": articles_model.get_all_articles_as_dicts() if articles_model else []
         }
         self.vm.guardar_contrato_actual(contrato_data)
@@ -222,9 +260,15 @@ class ContratosView(QWidget):
             row_to_remove = selection.currentIndex().row()
             model.remove_row(row_to_remove)
 
+    def _on_adjuntar_expediente(self):
+        self.vm.adjuntar_expediente(self)
+
+    def _on_ver_expediente(self):
+        ruta = self.expediente_path_edit.text()
+        self.vm.abrir_expediente(ruta)
+
     def _update_contracts_table(self, contratos: List[ContratoDTO]):
-        model = ContratosTableModel(contratos)
-        self.contracts_table.setModel(model)
+        self.source_model.update_data(contratos)
         self.contracts_table.resizeColumnsToContents()
 
     def _update_proveedores_combo(self, proveedores: List[ProveedorDTO]):
@@ -237,6 +281,7 @@ class ContratosView(QWidget):
         self.codigo_licitacion_edit.setText(contrato.codigo_licitacion)
         self.fecha_inicio_edit.setDate(QDate.fromString(str(contrato.fecha_inicio), "yyyy-MM-dd"))
         self.fecha_fin_edit.setDate(QDate.fromString(str(contrato.fecha_fin), "yyyy-MM-dd"))
+        self.expediente_path_edit.setText(contrato.expediente_path or "")
         
         index = self.proveedor_combo.findData(contrato.proveedor_id)
         self.proveedor_combo.setCurrentIndex(index if index != -1 else 0)

@@ -2,7 +2,8 @@
 from typing import List
 from sigvcf.infrastructure.persistence.unit_of_work import IUnitOfWork
 from sigvcf.modules.administrativo.dto import ContratoDTO, OrdenCompraDTO
-from sigvcf.core.domain.models import Contrato, ArticuloContrato, OrdenDeCompra
+from sigvcf.modules.proveedores.dto import ProveedorDTO
+from sigvcf.core.domain.models import Contrato, ArticuloContrato, OrdenDeCompra, Proveedor
 
 class AdministrativoService:
     """
@@ -53,6 +54,14 @@ class AdministrativoService:
             self.uow.commit()
             
             return ContratoDTO.from_orm(contrato)
+
+    def listar_proveedores(self) -> List[ProveedorDTO]:
+        """
+        Recupera una lista de todos los proveedores.
+        """
+        with self.uow:
+            proveedores = self.uow.proveedores.list()
+            return [ProveedorDTO.from_orm(p) for p in proveedores]
 
     def aprobar_orden_de_compra(self, orden_id: int) -> None:
         """

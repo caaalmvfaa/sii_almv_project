@@ -1,4 +1,5 @@
 # sigvcf/modules/almacen/views.py
+import qtawesome as qta
 from typing import List
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtWidgets import (
@@ -61,6 +62,7 @@ class AlmacenView(QWidget):
         self.stock_table = QTableView()
         self.stock_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.actualizar_stock_button = QPushButton("Actualizar Stock")
+        self.actualizar_stock_button.setIcon(qta.icon('fa5s.sync-alt', color='white'))
         stock_layout.addWidget(self.stock_table)
         stock_layout.addWidget(self.actualizar_stock_button, alignment=Qt.AlignmentFlag.AlignRight)
         self.tabs.addTab(stock_tab, "Control de Inventario")
@@ -77,6 +79,7 @@ class AlmacenView(QWidget):
         self.recepcionista_id_spinbox = QSpinBox()
         self.recepcionista_id_spinbox.setRange(1, 999)
         self.registrar_entrada_button = QPushButton("Registrar Entrada")
+        self.registrar_entrada_button.setIcon(qta.icon('fa5s.dolly-flatbed', color='white'))
         form_layout.addRow("ID de Orden de Compra:", self.orden_id_spinbox)
         form_layout.addRow("Ruta de Factura XML:", self.factura_path_edit)
         form_layout.addRow("ID del Recepcionista:", self.recepcionista_id_spinbox)
@@ -93,6 +96,7 @@ class AlmacenView(QWidget):
         self.qr_id_edit = QLineEdit()
         self.qr_id_edit.setPlaceholderText("Introduzca o escanee el ID del QR del requerimiento")
         self.despachar_button = QPushButton("Despachar")
+        self.despachar_button.setIcon(qta.icon('fa5s.shipping-fast', color='white'))
         despacho_form.addRow("ID de QR:", self.qr_id_edit)
         despacho_form.addRow(self.despachar_button)
         despacho_layout.addWidget(despacho_group)
