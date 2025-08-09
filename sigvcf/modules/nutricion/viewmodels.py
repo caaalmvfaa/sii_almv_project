@@ -3,7 +3,7 @@ from PySide6.QtCore import QObject, Signal, Slot, QDate
 from dependency_injector.wiring import inject, Provide
 from typing import Dict, List
 
-from sigvcf.containers import Container
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.nutricion.services import NutricionService
 from sigvcf.modules.nutricion.dto import ProgramacionMensualDTO, ArticuloContratoSimpleDTO
 
@@ -18,7 +18,7 @@ class NutricionViewModel(QObject):
     @inject
     def __init__(
         self,
-        nutricion_service: NutricionService = Provide[Container.nutricion_service],
+        nutricion_service: NutricionService = Provide["Container.nutricion_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)
