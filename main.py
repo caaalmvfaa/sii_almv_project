@@ -124,7 +124,13 @@ class Application:
         return False # Indica que la app debe cerrarse
 
     def _on_login_success(self, usuario_dict):
-        logger.info(f"Login exitoso para el usuario '{usuario_dict['nombre']}'.")
+        # Permitir tanto objeto Usuario como dict
+        nombre_usuario = None
+        if isinstance(usuario_dict, dict):
+            nombre_usuario = usuario_dict.get('nombre', str(usuario_dict))
+        else:
+            nombre_usuario = getattr(usuario_dict, 'nombre', str(usuario_dict))
+        logger.info(f"Login exitoso para el usuario '{nombre_usuario}'.")
         self.authenticated_user = usuario_dict
 
 def main() -> None:
