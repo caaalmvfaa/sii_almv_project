@@ -1,7 +1,7 @@
 from dependency_injector.wiring import inject, Provide
 from PySide6.QtCore import QObject, Signal, Slot
 
-from sigvcf.containers import Container
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.proveedores.services import ProveedorService
 from sigvcf.modules.proveedores.dto import EstadoEntregaDTO
 
@@ -19,7 +19,7 @@ class ProveedorViewModel(QObject):
     @inject
     def __init__(
         self,
-        proveedor_service: ProveedorService = Provide[Container.proveedor_service],
+        proveedor_service: ProveedorService = Provide["Container.proveedor_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)

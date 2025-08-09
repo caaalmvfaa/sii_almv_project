@@ -1,7 +1,7 @@
 from dependency_injector.wiring import inject, Provide
 from PySide6.QtCore import QObject, Signal, Slot
 
-from sigvcf.containers import Container
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.financiero.services import FinancieroService
 from sigvcf.modules.financiero.dto import RegistroContableDTO, ExpedienteEntradaDTO
 
@@ -19,7 +19,7 @@ class FinancieroViewModel(QObject):
     @inject
     def __init__(
         self,
-        financiero_service: FinancieroService = Provide[Container.financiero_service],
+        financiero_service: FinancieroService = Provide["Container.financiero_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)
