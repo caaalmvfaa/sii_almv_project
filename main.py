@@ -28,11 +28,11 @@ class MainWindow(QMainWindow):
     """
     Ventana principal de la aplicación con navegación por módulos y control de acceso por roles.
     """
-    def __init__(self, usuario: Usuario, container: Container):
+    def __init__(self, usuario: dict, container: Container):
         super().__init__()
         self.usuario = usuario
         self.container = container
-        self.setWindowTitle(f"SIG-VCF - Usuario: {self.usuario.nombre} (Rol: {self.usuario.rol.nombre_rol})")
+        self.setWindowTitle(f"SIG-VCF - Usuario: {self.usuario['nombre']} (Rol: {self.usuario['rol']['nombre_rol']})")
         self.setGeometry(100, 100, 1280, 720)
 
         # Establecer el ícono de la ventana principal
@@ -80,7 +80,6 @@ class MainWindow(QMainWindow):
             "Recursos Financieros": "fa5s.file-invoice-dollar",
             "Portal de Proveedores": "fa5s.truck"
         }
-        
         # Permisos por rol
         role_permissions = {
             'Admin': list(all_modules.keys()),
@@ -89,21 +88,16 @@ class MainWindow(QMainWindow):
             'Contador': ["Recursos Financieros"],
             'Proveedor': ["Portal de Proveedores"],
         }
-        
-        user_role = self.usuario.rol.nombre_rol
+        user_role = self.usuario['rol']['nombre_rol']
         allowed_modules = role_permissions.get(user_role, [])
-        
         logger.info(f"Configurando módulos para el rol '{user_role}'. Módulos permitidos: {allowed_modules}")
-        
         for name, (vm_factory, view_class) in all_modules.items():
             if name in allowed_modules:
                 icon_name = icon_map.get(name, "fa5s.question-circle")
                 icon = qta.icon(icon_name, color='#f0f0f0', color_active='#66b2ff')
-                
                 list_item = self.nav_list.addItem(name)
                 # La API de QListWidget cambió, ahora se añade el item y luego se le asigna el ícono
                 self.nav_list.item(self.nav_list.count() - 1).setIcon(icon)
-
                 view_model = vm_factory()
                 view_widget = view_class(view_model)
                 self.view_stack.addWidget(view_widget)
@@ -122,17 +116,16 @@ class Application:
         
         login_view = LoginView(view_model=login_vm)
         
-        if login_view.exec() == QDialog.DialogCode.Accepted:
+        if login_view.exec() == QDialog.DialogCode.Accepted and self.authenticated_user is not None:
             self.main_window = MainWindow(usuario=self.authenticated_user, container=self.container)
             self.main_window.show()
             return True # Indica que la app principal debe correr
-            
-        logger.info("El usuario cerró la ventana de login. La aplicación terminará.")
+        logger.info("El usuario cerró la ventana de login o no se autenticó correctamente. La aplicación terminará.")
         return False # Indica que la app debe cerrarse
 
-    def _on_login_success(self, usuario: Usuario):
-        logger.info(f"Login exitoso para el usuario '{usuario.nombre}'.")
-        self.authenticated_user = usuario
+    def _on_login_success(self, usuario_dict):
+        logger.info(f"Login exitoso para el usuario '{usuario_dict['nombre']}'.")
+        self.authenticated_user = usuario_dict
 
 def main() -> None:
     logging.basicConfig(
