@@ -14,6 +14,7 @@ class NutricionViewModel(QObject):
     requerimiento_generado = Signal(object)
     exito = Signal(str)
     error = Signal(str)
+    programacion_guardada = Signal(str)  # Señal agregada para compatibilidad con la vista
 
     @inject
     def __init__(
