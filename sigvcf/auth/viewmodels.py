@@ -3,7 +3,7 @@ import logging
 from dependency_injector.wiring import inject, Provide
 from PySide6.QtCore import QObject, Signal, Slot
 
-from containers import Container # <--- ¡LÍNEA CORREGIDA!
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.auth.services import AuthService
 
 logger = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ class LoginViewModel(QObject):
     @inject
     def __init__(
         self,
-        auth_service: AuthService = Provide[Container.auth_service],
+        auth_service: AuthService = Provide["Container.auth_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)
