@@ -3,7 +3,7 @@ from PySide6.QtCore import QObject, Signal, Slot, QDate
 from PySide6.QtWidgets import QFileDialog, QWidget
 from typing import List, Dict, Any
 
-from sigvcf.containers import Container
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.administrativo.services import AdministrativoService
 from sigvcf.modules.administrativo.dto import ContratoDTO, ArticuloContratoDTO
 from sigvcf.modules.proveedores.dto import ProveedorDTO
@@ -22,7 +22,7 @@ class ContratoViewModel(QObject):
     @inject
     def __init__(
         self,
-        administrativo_service: AdministrativoService = Provide[Container.administrativo_service],
+        administrativo_service: AdministrativoService = Provide["Container.administrativo_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)

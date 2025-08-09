@@ -2,7 +2,7 @@ from dependency_injector.wiring import inject, Provide
 from PySide6.QtCore import QObject, Signal, Slot
 from typing import Dict
 
-from sigvcf.containers import Container
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.juridico.services import JuridicoService
 from sigvcf.modules.juridico.dto import ReporteIncumplimientoCreateDTO, PenalizacionDTO
 
@@ -20,7 +20,7 @@ class JuridicoViewModel(QObject):
     @inject
     def __init__(
         self,
-        juridico_service: JuridicoService = Provide[Container.juridico_service],
+        juridico_service: JuridicoService = Provide["Container.juridico_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)
