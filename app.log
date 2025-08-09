@@ -1,3 +1,4 @@
-2025-08-09 13:59:18,684 - __main__ - INFO - Iniciando el ciclo de vida de la aplicación. Mostrando pantalla de login.
-2025-08-09 13:59:26,858 - sigvcf.auth.viewmodels - INFO - ViewModel: Intentando login para el usuario 'Jesus'.
-2025-08-09 13:59:27,087 - sigvcf.auth.viewmodels - INFO - ViewModel: Login exitoso para 'Jesus'.
+2025-08-09 14:01:55,888 - __main__ - INFO - Iniciando el ciclo de vida de la aplicación. Mostrando pantalla de login.
+2025-08-09 14:02:01,009 - sigvcf.auth.viewmodels - INFO - ViewModel: Intentando login para el usuario 'Jesus'.
+2025-08-09 14:02:01,235 - sigvcf.auth.viewmodels - INFO - ViewModel: Login exitoso para 'Jesus'.
+2025-08-09 14:02:01,235 - __main__ - INFO - El usuario cerró la ventana de login o no se autenticó correctamente. La aplicación terminará.
