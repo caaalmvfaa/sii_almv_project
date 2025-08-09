@@ -1,0 +1,73 @@
+
+This file lists modules PyInstaller was not able to find. This does not
+necessarily mean this module is required for running your program. Python and
+Python 3rd-party packages include a lot of conditional or optional modules. For
+example the module 'ntpath' only exists on Windows, whereas the module
+'posixpath' only exists on Posix systems.
+
+Types if import:
+* top-level: imported at the top-level - look at these first
+* conditional: imported within an if-statement
+* delayed: imported within a function
+* optional: imported within a try-except-statement
+
+IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
+            tracking down the missing module yourself. Thanks!
+
+missing module named 'org.python' - imported by copy (optional), xml.sax (delayed, conditional)
+missing module named winreg - imported by importlib._bootstrap_external (conditional), platform (delayed, optional), mimetypes (optional), urllib.request (delayed, conditional, optional)
+missing module named nt - imported by os (delayed, conditional, optional), ntpath (optional), shutil (conditional), importlib._bootstrap_external (conditional), ctypes (delayed, conditional)
+missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
+excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional), zipimport (top-level)
+missing module named _winapi - imported by encodings (delayed, conditional, optional), ntpath (optional), subprocess (conditional), multiprocessing.connection (optional), multiprocessing.spawn (delayed, conditional), multiprocessing.reduction (conditional), multiprocessing.shared_memory (conditional), multiprocessing.heap (conditional), multiprocessing.popen_spawn_win32 (top-level), asyncio.windows_events (top-level), asyncio.windows_utils (top-level), mimetypes (optional)
+missing module named msvcrt - imported by subprocess (optional), multiprocessing.spawn (delayed, conditional), multiprocessing.popen_spawn_win32 (top-level), asyncio.windows_events (top-level), asyncio.windows_utils (top-level), getpass (optional)
+missing module named _scproxy - imported by urllib.request (conditional)
+missing module named 'java.lang' - imported by platform (delayed, optional), xml.sax._exceptions (conditional)
+missing module named multiprocessing.BufferTooShort - imported by multiprocessing (top-level), multiprocessing.connection (top-level)
+missing module named multiprocessing.AuthenticationError - imported by multiprocessing (top-level), multiprocessing.connection (top-level)
+missing module named multiprocessing.get_context - imported by multiprocessing (top-level), multiprocessing.pool (top-level), multiprocessing.managers (top-level), multiprocessing.sharedctypes (top-level)
+missing module named multiprocessing.TimeoutError - imported by multiprocessing (top-level), multiprocessing.pool (top-level)
+missing module named org - imported by pickle (optional)
+missing module named multiprocessing.set_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
+missing module named multiprocessing.get_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
+missing module named pyimod02_importers - imported by /home/jesus-langarica/Documentos/sii_almv /.venv/lib/python3.11/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (delayed)
+missing module named pydantic.BaseModel - imported by pydantic (conditional), pydantic._internal._typing_extra (conditional), pydantic._internal._import_utils (delayed, conditional), pydantic._internal._core_utils (delayed), pydantic.deprecated.copy_internals (delayed, conditional), sigvcf.modules.almacen.dto (top-level), sigvcf.modules.nutricion.dto (top-level), sigvcf.modules.juridico.dto (top-level), sigvcf.modules.administrativo.dto (top-level), sigvcf.modules.proveedores.dto (top-level), sigvcf.modules.financiero.dto (top-level)
+missing module named vms_lib - imported by platform (delayed, optional)
+missing module named java - imported by platform (delayed)
+missing module named _winreg - imported by platform (delayed, optional)
+missing module named cython - imported by pydantic.v1.version (optional)
+missing module named _overlapped - imported by asyncio.windows_events (top-level)
+missing module named asyncio.DefaultEventLoopPolicy - imported by asyncio (delayed, conditional), asyncio.events (delayed, conditional)
+missing module named annotationlib - imported by typing_extensions (conditional), sqlalchemy.util.langhelpers (conditional)
+missing module named email_validator - imported by pydantic.networks (delayed, conditional, optional), pydantic.v1.networks (delayed, conditional, optional), pydantic.v1._hypothesis_plugin (optional)
+missing module named toml - imported by pydantic.v1.mypy (delayed, conditional, optional)
+missing module named tomli - imported by pydantic.mypy (delayed, conditional, optional), pydantic.v1.mypy (delayed, conditional, optional)
+missing module named orjson - imported by mypy.util (optional)
+missing module named dotenv - imported by pydantic.v1.env_settings (delayed, optional)
+missing module named hypothesis - imported by pydantic.v1._hypothesis_plugin (top-level)
+missing module named _typeshed - imported by pydantic_core._pydantic_core (top-level), pydantic._internal._dataclasses (conditional)
+missing module named eval_type_backport - imported by pydantic._internal._typing_extra (delayed, optional)
+missing module named 'rich.pretty' - imported by pydantic._internal._core_utils (delayed)
+missing module named rich - imported by pydantic._internal._core_utils (conditional)
+missing module named pydantic.PydanticUserError - imported by pydantic (top-level), pydantic.root_model (top-level)
+missing module named pydantic.PydanticSchemaGenerationError - imported by pydantic (delayed), pydantic.functional_validators (delayed, conditional)
+missing module named importlib_metadata - imported by sqlalchemy.util.compat (conditional)
+missing module named pysqlcipher3 - imported by sqlalchemy.dialects.sqlite.pysqlcipher (delayed)
+missing module named sqlcipher3 - imported by sqlalchemy.dialects.sqlite.pysqlcipher (delayed, optional)
+missing module named psycopg2 - imported by sqlalchemy.dialects.postgresql.psycopg2 (delayed)
+missing module named 'psycopg.pq' - imported by sqlalchemy.dialects.postgresql.psycopg (delayed)
+missing module named 'psycopg.types' - imported by sqlalchemy.dialects.postgresql.psycopg (delayed, conditional)
+missing module named 'psycopg.adapt' - imported by sqlalchemy.dialects.postgresql.psycopg (delayed, conditional)
+missing module named psycopg - imported by sqlalchemy.dialects.postgresql.psycopg (delayed, conditional)
+missing module named asyncpg - imported by sqlalchemy.dialects.postgresql.asyncpg (delayed)
+missing module named oracledb - imported by sqlalchemy.dialects.oracle.oracledb (delayed, conditional)
+missing module named cx_Oracle - imported by sqlalchemy.dialects.oracle.cx_oracle (delayed)
+missing module named mysql - imported by sqlalchemy.dialects.mysql.mysqlconnector (delayed, conditional, optional)
+missing module named asyncmy - imported by sqlalchemy.dialects.mysql.asyncmy (delayed)
+missing module named pymysql - imported by sqlalchemy.dialects.mysql.aiomysql (delayed)
+missing module named yaml - imported by dependency_injector.providers (optional)
+missing module named werkzeug - imported by dependency_injector.wiring (top-level)
+missing module named starlette - imported by dependency_injector.wiring (top-level)
+missing module named fast_depends - imported by dependency_injector.wiring (top-level)
+missing module named fastapi - imported by dependency_injector.wiring (top-level)
+missing module named qtawesome - imported by /home/jesus-langarica/Documentos/sii_almv /main.py (top-level), sigvcf.modules.almacen.views (top-level), sigvcf.modules.nutricion.views (top-level), sigvcf.modules.juridico.views (top-level), sigvcf.modules.administrativo.views (top-level), sigvcf.modules.financiero.views (top-level), sigvcf.modules.proveedores.views (top-level)
