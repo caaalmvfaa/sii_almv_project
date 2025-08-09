@@ -2,7 +2,8 @@ from dependency_injector.wiring import inject, Provide
 from PySide6.QtCore import QObject, Signal, Slot
 from typing import Dict
 
-from sigvcf.containers import Container
+ # Import corregido: Container está en la raíz del proyecto
+ # Eliminado import directo de Container para evitar ciclo
 from sigvcf.modules.almacen.services import AlmacenService
 from sigvcf.modules.almacen.dto import EntradaBodegaCreateDTO
 
@@ -20,7 +21,7 @@ class AlmacenViewModel(QObject):
     @inject
     def __init__(
         self,
-        almacen_service: AlmacenService = Provide[Container.almacen_service],
+        almacen_service: AlmacenService = Provide["Container.almacen_service"],
         parent: QObject | None = None
     ):
         super().__init__(parent)
