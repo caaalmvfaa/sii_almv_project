@@ -1,15 +1,11 @@
-2025-08-09 15:27:52,160 - __main__ - INFO - Iniciando el ciclo de vida de la aplicación. Mostrando pantalla de login.
-2025-08-09 15:27:59,520 - sigvcf.auth.viewmodels - INFO - ViewModel: Intentando login para el usuario 'Jesus'.
-2025-08-09 15:27:59,748 - sigvcf.auth.viewmodels - INFO - ViewModel: Login exitoso para 'Jesus'.
-2025-08-09 15:27:59,749 - __main__ - INFO - Login exitoso para el usuario 'Jesus'.
-2025-08-09 15:27:59,773 - __main__ - INFO - Configurando módulos para el rol 'Admin'. Módulos permitidos: ['Gestión de Contratos', 'Planificación Nutricional', 'Control de Almacén', 'Gestión Jurídica', 'Recursos Financieros', 'Portal de Proveedores']
-2025-08-09 15:27:59,859 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Cargando artículos disponibles para nutrición.
-2025-08-09 15:27:59,912 - sigvcf.modules.almacen.views_3d - INFO - Actualizando la vista 3D con 4 tipos de artículos.
-2025-08-09 15:28:01,352 - __main__ - INFO - MainWindow inicializada y mostrada.
-2025-08-09 15:28:57,861 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Validando disponibilidad para artículo 2, cantidad 234.
-2025-08-09 15:28:59,660 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Validando disponibilidad para artículo 2, cantidad 237.
-2025-08-09 15:28:59,765 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Guardando programación: {'usuario_id': 1, 'articulo_contrato_id': 2, 'mes_anho': datetime.date(2025, 8, 1), 'cantidades_por_dia': {1: 234, 2: 3}}
-2025-08-09 15:29:05,808 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Guardando programación: {'usuario_id': 1, 'articulo_contrato_id': 2, 'mes_anho': datetime.date(2025, 8, 1), 'cantidades_por_dia': {1: 234, 2: 3}}
-2025-08-09 15:29:08,977 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Generando requerimiento para mes 2025-08.
-2025-08-09 15:29:22,018 - sigvcf.modules.almacen.views_3d - INFO - Actualizando la vista 3D con 4 tipos de artículos.
-2025-08-09 15:29:32,940 - sigvcf.modules.almacen.views_3d - INFO - Actualizando la vista 3D con 4 tipos de artículos.
+2025-08-10 23:41:16,482 - __main__ - INFO - Iniciando el ciclo de vida de la aplicación. Mostrando pantalla de login.
+2025-08-10 23:41:26,825 - sigvcf.auth.viewmodels - INFO - ViewModel: Intentando login para el usuario 'Jesus'.
+2025-08-10 23:41:27,051 - sigvcf.auth.viewmodels - INFO - ViewModel: Login exitoso para 'Jesus'.
+2025-08-10 23:41:27,051 - __main__ - INFO - Login exitoso para el usuario 'Jesus'.
+2025-08-10 23:41:27,075 - __main__ - INFO - Configurando módulos para el rol 'Admin'. Módulos permitidos: ['Gestión de Contratos', 'Planificación Nutricional', 'Control de Almacén', 'Gestión Jurídica', 'Recursos Financieros', 'Portal de Proveedores']
+2025-08-10 23:41:27,148 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Cargando artículos disponibles para nutrición.
+2025-08-10 23:41:27,200 - sigvcf.modules.almacen.views_3d - INFO - Actualizando la vista 3D con 4 tipos de artículos.
+2025-08-10 23:41:28,656 - __main__ - INFO - MainWindow inicializada y mostrada.
+2025-08-10 23:41:44,258 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Validando disponibilidad para artículo 1, cantidad 22.
+2025-08-10 23:41:45,106 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Validando disponibilidad para artículo 1, cantidad 44.
+2025-08-10 23:41:49,125 - sigvcf.modules.nutricion.viewmodels - INFO - ViewModel: Guardando programación: {'usuario_id': 1, 'articulo_contrato_id': 1, 'mes_anho': datetime.date(2025, 8, 1), 'cantidades_por_dia': {1: 22, 3: 22}}

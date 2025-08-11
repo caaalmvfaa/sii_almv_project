@@ -15,8 +15,8 @@ IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
             tracking down the missing module yourself. Thanks!
 
 missing module named 'org.python' - imported by copy (optional), xml.sax (delayed, conditional)
-missing module named winreg - imported by importlib._bootstrap_external (conditional), platform (delayed, optional), mimetypes (optional), urllib.request (delayed, conditional, optional)
-missing module named nt - imported by os (delayed, conditional, optional), ntpath (optional), shutil (conditional), importlib._bootstrap_external (conditional), ctypes (delayed, conditional)
+missing module named winreg - imported by importlib._bootstrap_external (conditional), platform (delayed, optional), qtawesome.iconic_font (conditional), mimetypes (optional), urllib.request (delayed, conditional, optional)
+missing module named nt - imported by shutil (conditional), importlib._bootstrap_external (conditional), ntpath (optional), os (delayed, conditional, optional), ctypes (delayed, conditional)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional), zipimport (top-level)
 missing module named _winapi - imported by encodings (delayed, conditional, optional), ntpath (optional), subprocess (conditional), multiprocessing.connection (optional), multiprocessing.spawn (delayed, conditional), multiprocessing.reduction (conditional), multiprocessing.shared_memory (conditional), multiprocessing.heap (conditional), multiprocessing.popen_spawn_win32 (top-level), asyncio.windows_events (top-level), asyncio.windows_utils (top-level), mimetypes (optional)
@@ -30,7 +30,7 @@ missing module named multiprocessing.TimeoutError - imported by multiprocessing 
 missing module named org - imported by pickle (optional)
 missing module named multiprocessing.set_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
 missing module named multiprocessing.get_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
-missing module named pyimod02_importers - imported by /home/jesus-langarica/Documentos/sii_almv /.venv/lib/python3.11/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (delayed)
+missing module named pyimod02_importers - imported by /home/jesus-langarica/.pyenv/versions/3.11.9/lib/python3.11/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (delayed)
 missing module named pydantic.BaseModel - imported by pydantic (conditional), pydantic._internal._typing_extra (conditional), pydantic._internal._import_utils (delayed, conditional), pydantic._internal._core_utils (delayed), pydantic.deprecated.copy_internals (delayed, conditional), sigvcf.modules.almacen.dto (top-level), sigvcf.modules.nutricion.dto (top-level), sigvcf.modules.juridico.dto (top-level), sigvcf.modules.administrativo.dto (top-level), sigvcf.modules.proveedores.dto (top-level), sigvcf.modules.financiero.dto (top-level)
 missing module named vms_lib - imported by platform (delayed, optional)
 missing module named java - imported by platform (delayed)
@@ -70,4 +70,3 @@ missing module named werkzeug - imported by dependency_injector.wiring (top-leve
 missing module named starlette - imported by dependency_injector.wiring (top-level)
 missing module named fast_depends - imported by dependency_injector.wiring (top-level)
 missing module named fastapi - imported by dependency_injector.wiring (top-level)
-missing module named qtawesome - imported by /home/jesus-langarica/Documentos/sii_almv /main.py (top-level), sigvcf.modules.almacen.views (top-level), sigvcf.modules.nutricion.views (top-level), sigvcf.modules.juridico.views (top-level), sigvcf.modules.administrativo.views (top-level), sigvcf.modules.financiero.views (top-level), sigvcf.modules.proveedores.views (top-level)
